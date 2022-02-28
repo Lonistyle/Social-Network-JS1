@@ -1,0 +1,1302 @@
+{
+	"info": {
+		"_postman_id": "27ab5ecd-0071-48f3-8dd7-e9b81ac37b36",
+		"name": "js course api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "version",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:2718/api/version",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login admin bad (wrong email address)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login admin bad \", function () {\r",
+							"  pm.response.to.have.status(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "fsdfssdffdsf",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/login?email=asfdff&password=password",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "asfdff"
+						},
+						{
+							"key": "password",
+							"value": "password"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login admin bad (no password)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login admin\", function () {\r",
+							"  pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "admin@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/login",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login admin good",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login admin\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"has a token\", function () {\r",
+							"    const {token} = pm.response.json();\r",
+							"    //postman.setEnvironmentVariable('admin_token', token);\r",
+							"    pm.globals.set(\"admin_token\", token);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "admin@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/login",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"got users\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "token",
+							"value": "5fefc3e2-0d7b-4a90-972f-656672f73967",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "token",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user - \"test one\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"create user\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "test one",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "testone",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "testone@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user - \"test two\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"create user\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"create user\", function () {\r",
+							"//     pm.response.to.have.status(\"Created\");\r",
+							"// });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "test two",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "testtwo",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "testtwo@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user - \"test three\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"create user\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "test four",
+							"description": "will be changed later on",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "testthree",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "testthree@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send activation request - user id = 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"request activation\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// pm.test(\"create user\", function () {\r",
+							"//     pm.response.to.have.status(\"Activated\");\r",
+							"// });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:2718/api/messages/active/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"messages",
+						"active",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user status - activate user id= 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"update user statue\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "approve",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/state/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"state",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user - \"user four\" -> \"user three\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"update user \", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "test three",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user - id=4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"get user 4\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user status - suspend id=4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"update user statues\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "suspend",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/state/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"state",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user - user id=4",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"delete user \", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new post - user id = 4  - bad",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"create new post\", function () {\r",
+							"  pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{user_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "hello world!",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/posts/",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"posts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user status - restore id=4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"update user statue\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "status",
+							"value": "restore",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/state/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"state",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user - user: \"test three\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login user\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"has a token\", function () {\r",
+							"    const {token} = pm.response.json();\r",
+							"    //postman.setEnvironmentVariable('admin_token', token);\r",
+							"    pm.globals.set(\"user_token\", token);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "testthree@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "testthree",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/user/login",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send message - id = 4 -> id = 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"create new message\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{user_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "hello user 2",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/message/2",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"message",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new post - user id = 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"create new post\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{user_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "hello world!",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/posts/",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"posts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new post - user id = 4 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"create new message\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{user_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "hello world! 2",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/posts/",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"posts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user posts- id = 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"get user posts\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{user_token}}\"}",
+						"type": "string"
+					}
+				],
+				"url": {
+					"raw": "localhost:2718/api/posts",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user post - post id = 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"delete user post\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "hello world!",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/posts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user posts- id = 4 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"get users posts\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{user_token}}\"}",
+						"type": "string"
+					}
+				],
+				"url": {
+					"raw": "localhost:2718/api/posts",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user messages - id = 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"get user messages\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{user_token}}\"}",
+						"type": "string"
+					}
+				],
+				"url": {
+					"raw": "localhost:2718/api/messages/4",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"messages",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send messages to all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"send message to all\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "string"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "hello to all users",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/messages",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get version",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"login admin\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{\"token\":\"{{admin_token}}\"}",
+						"type": "string"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "text",
+							"value": "hello to all users",
+							"type": "string"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:2718/api/version",
+					"host": [
+						"localhost"
+					],
+					"port": "2718",
+					"path": [
+						"api",
+						"version"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
